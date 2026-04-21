@@ -1,0 +1,32 @@
+class Solution:
+    def safeNodes(self, V, edges):
+        # Code here
+        def dfs(node):
+            vis[node]=1
+            pathvis[node]=1
+            for adjnode in adj[node]:
+                if(vis[adjnode]==0):
+                    if(dfs(adjnode)):
+                        return True
+                elif(vis[adjnode]==1):
+                    if(pathvis[adjnode]==1):
+                        return True
+            safe[node]=1
+            pathvis[node]=0
+        adj=[]
+        for _ in range(V):
+            adj.append([])
+        for u,v in edges:
+            adj[u].append(v)
+        vis=[0]*V
+        pathvis=[0]*V
+        safe=[0]*V
+        for n in range(0,V):
+            if(vis[n]==0):
+                dfs(n)
+        ans=[]
+        for i in range(0,V):
+            if(safe[i]==1):
+                ans.append(i)
+        return ans
+                    
