@@ -1,0 +1,28 @@
+from collections import deque
+class Solution:
+    def isCyclic(self, V, edges):
+        # code here
+        adj = []
+        for _ in range (0,V):
+            adj.append([])
+        for u,v in  edges:
+            adj[u].append(v)
+        indegre=[0]*V
+        for u,v in edges:
+            indegre[v]+=1
+        q=deque([])
+        for i in range(0,V):
+            if(indegre[i]==0):
+                q.append(i)
+        ans=[]
+        while(len(q)>0):
+            node=q.popleft()
+            ans.append(node)
+            for adjnode in adj[node]:
+                indegre[adjnode]-=1
+                if(indegre[adjnode]==0):
+                    q.append(adjnode)
+        if(len(ans)!=V):
+            return True
+        return False    
+        
